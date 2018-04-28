@@ -63,7 +63,9 @@ export default class Checking extends Component {
                         {this.state.checkText}
                     </Text>
                 </View>
-                <Button style={styles.countBtn} title={'统计'} onPress={() => this.props.navigation.navigate('App')}/>
+                <Text style={styles.countBtn} onPress={() => this.props.navigation.navigate('App')}>
+                    {'统计'}
+                </Text>
             </View>
 
         )
@@ -73,7 +75,7 @@ export default class Checking extends Component {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        alignItems:'center',
+        alignItems: 'center',
         // justifyContent: 'center',
         backgroundColor: '#fff',
     },
@@ -95,9 +97,14 @@ const styles = StyleSheet.create({
         color: 'white',
     },
     countBtn: {
-        position:'absolute',
-        top:100,
-        bottom:10,
+        position: 'absolute',
+        top: 300,
+        left: 20,
+        right: 20,
+        textAlign: 'center',
+        padding: 10,
+        backgroundColor: 'skyblue',
+        borderRadius: 5
     },
 
 })
