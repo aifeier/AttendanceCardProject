@@ -68,7 +68,7 @@ class CountApp extends Component {
     render() {
 
         return (
-            <ScrollView>
+            <ScrollView style={{flex: 1,}}>
                 <View style={styles.container}>
                     <Text style={{padding: 20, textAlign: 'center', fontSize: 14}}>{this.state.date}</Text>
                     <View style={{
