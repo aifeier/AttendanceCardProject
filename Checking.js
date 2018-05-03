@@ -1,8 +1,10 @@
 import React, {Component} from 'react'
-import {StyleSheet, Text, View} from 'react-native'
+import {StyleSheet, Text, View, ToastAndroid} from 'react-native'
 import {MapView} from 'react-native-amap3d'
 import AAmpUtils from './nativeModule/AAmpUtils'
 import {getCompanyLL, saveCompanyInfo} from './AppStorage'
+
+import Setting from './Setting'
 
 export default class Checking extends Component {
 
@@ -76,7 +78,7 @@ export default class Checking extends Component {
     _onLocation = ({nativeEvent}) => this._log('onLocation', nativeEvent)
 
     _checking() {
-
+        fetch('http://www.baidu.com').then((response) => ToastAndroid.show(JSON.stringify(response), ToastAndroid.LONG))
     }
 
     render() {
@@ -86,10 +88,8 @@ export default class Checking extends Component {
                          zoomLevel={this.state.zoomLevel}
                          coordinate={this.state.coordinate}
                          locationEnabled={this.state.locationEnabled}
-                         locationInterval={30000}
-                         onLocation={this._onLocation
-                             // ToastAndroid.show('定位成功：' + JSON.stringify(nativeEvent, null, 2), ToastAndroid.SHORT)
-                         }>
+                         locationInterval={10000}
+                         onLocation={this._onLocation}>
                 </MapView>
                 <View style={styles.checkBtnView}>
                     <Text style={styles.checkBtn} onPress={() => this._checking()}>
@@ -99,7 +99,21 @@ export default class Checking extends Component {
                 <Text style={styles.countBtn} onPress={() => this.props.navigation.navigate('App')}>
                     {'统计'}
                 </Text>
-                <Text style={[styles.countBtn, {top: 350,}]} onPress={() => this.props.navigation.navigate('Setting')}>
+                <Text style={[styles.countBtn, {top: 350,}]} onPress={() => this.props.navigation.navigate('Setting', {
+                    name: 'abc', onResultBack(changed) {
+                        console.log('拿到返回值' + changed)
+                        getCompanyLL((error, result) => {
+                            if (error && null == result) {
+                            } else {
+                                this.companyLL = {
+                                    latitude: result.latitude,
+                                    longitude: result.longitude,
+                                    radius: result.radius
+                                }
+                            }
+                        })
+                    },
+                }, 'View')}>
                     {'设置'}
                 </Text>
             </View>

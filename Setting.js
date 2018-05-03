@@ -8,19 +8,24 @@ export default class Setting extends Component {
         title: '设置打卡范围',
     }
 
-    state = {
-        zoomLevel: 16,
-        coordinate: {
-            latitude: 30.278975,
-            longitude: 120.145913,
-        },
-        //公司经纬度
-        companyLL: {
-            latitude: 0,
-            longitude: 0,
-            radius: 0,
-        },
-        companyLLStr: '地图点击设置公司位置',
+    constructor(props) {
+        super(props)
+        console.log(props)
+        console.log(props.navigation.state.params.name)
+        this.state = {
+            zoomLevel: 16,
+            coordinate: {
+                latitude: 30.278975,
+                longitude: 120.145913,
+            },
+            //公司经纬度
+            companyLL: {
+                latitude: 0,
+                longitude: 0,
+                radius: 0,
+            },
+            companyLLStr: '地图点击设置公司位置',
+        }
     }
 
     saveCompany() {
@@ -29,7 +34,8 @@ export default class Setting extends Component {
             return
         }
         saveCompanyInfo(this.state.companyLL)
-        this.props.navigation.goBack()
+        this.props.navigation.state.params.onResultBack(true)
+        this.props.navigation.pop()
     }
 
     _onPress(event, data) {
