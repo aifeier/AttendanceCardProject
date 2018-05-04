@@ -1,6 +1,7 @@
 package com.attendancecardproject;
 
 import com.attendancecardproject.nativeManager.AAmpUtils;
+import com.attendancecardproject.nativeManager.NetWorkUtils;
 import com.facebook.react.ReactPackage;
 import com.facebook.react.bridge.NativeModule;
 import com.facebook.react.bridge.ReactApplicationContext;
@@ -20,6 +21,7 @@ public class MyReactPackage implements ReactPackage {
     public List<NativeModule> createNativeModules(ReactApplicationContext reactContext) {
         List<NativeModule> modules = new ArrayList<>();
         modules.add(new AAmpUtils(reactContext));
+        modules.add(new NetWorkUtils(reactContext));
         return modules;
     }
 

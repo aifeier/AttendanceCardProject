@@ -92,7 +92,7 @@ class CountApp extends Component {
                         <Text style={{fontSize: 16, color: 'dodgerblue'}}>2人</Text>
                     </View>
 
-                    <View style={{alignItems: 'center'}}>
+                    <View style={{alignItems: 'center',flex: 1}}>
                         <PieChart
                             style={{width: 300, height: 300}}
                             logEnabled={true}

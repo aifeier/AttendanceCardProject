@@ -1,10 +1,11 @@
 import React, {Component} from 'react'
-import {StyleSheet, Text, View, ToastAndroid} from 'react-native'
+import {StyleSheet, Text, View, ToastAndroid, Alert} from 'react-native'
 import {MapView} from 'react-native-amap3d'
 import AAmpUtils from './nativeModule/AAmpUtils'
 import {getCompanyLL, saveCompanyInfo} from './AppStorage'
 
 import Setting from './Setting'
+import NetWorkUtils from './nativeModule/NetWorkUtils'
 
 export default class Checking extends Component {
 
@@ -45,6 +46,16 @@ export default class Checking extends Component {
                 longitude: 120.145913,
             },
             locationEnabled: true,
+            companyWifis: [
+                {
+                    BSSID: '30:fc:68:18:ac:1e',
+                    SSID: 'upsoft_yt',
+                },
+                {
+                    BSSID: 'upsoft_5g',
+                    SSID: '30:fc:68:18:ac:20',
+                },
+            ],
         }
     }
 
@@ -77,8 +88,17 @@ export default class Checking extends Component {
 
     _onLocation = ({nativeEvent}) => this._log('onLocation', nativeEvent)
 
+
     _checking() {
-        fetch('http://www.baidu.com').then((response) => ToastAndroid.show(JSON.stringify(response), ToastAndroid.LONG))
+        fetch('http://www.baidu.com').then((response) => {
+            // ToastAndroid.show(JSON.stringify(response), ToastAndroid.SHORT)
+            Alert.alert('', '您的勤奋打败了0%的队友')
+        })
+        NetWorkUtils.getWifiList().then(wifis => {
+            console.log(wifis)
+            NetWorkUtils.checkHasWifi(wifis, this.state.companyWifis, (hasCompanyWifi) => console.log('是否在公司wifi范围：' + hasCompanyWifi))
+        })
+
     }
 
     render() {

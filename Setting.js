@@ -4,6 +4,7 @@ import {MapView} from 'react-native-amap3d'
 import {saveCompanyInfo} from './AppStorage'
 
 export default class Setting extends Component {
+
     static navigationOptions = {
         title: '设置打卡范围',
     }
