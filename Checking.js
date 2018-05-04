@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {StyleSheet, Text, View, ToastAndroid, Alert} from 'react-native'
+import {StyleSheet, Text, View, ToastAndroid, Alert, Platform} from 'react-native'
 import {MapView} from 'react-native-amap3d'
 import AAmpUtils from './nativeModule/AAmpUtils'
 import {getCompanyLL, saveCompanyInfo} from './AppStorage'
@@ -57,11 +57,14 @@ export default class Checking extends Component {
                     SSID: '30:fc:68:18:ac:20',
                 },
             ],
+            android: Platform.OS == 'android',
         }
         this._checkWifi()
     }
 
     _checkWifi() {
+        if (!this.state.android)
+            return
         NetWorkUtils.getWifiList().then(wifis => {
             console.log(wifis)
             NetWorkUtils.checkHasWifi(wifis, this.state.companyWifis, (hasCompanyWifi) => {
