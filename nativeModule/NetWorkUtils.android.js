@@ -11,7 +11,7 @@ export type Wifi = {
 
 export type Callback = (hasCompanyWifi: boolean) => void
 
-/*为了方便的使用原生方法，将原生的方法在定义一次*/
+/*为了方便的使用原生方法，将原生的方法再定义一次*/
 export default {
     /*自定义方法名 :  需要传的参数（：有Promise就写，没有就不用）=> 原生方法名*/
     /*通过import NetWorkUtils.方法名 调用*/
