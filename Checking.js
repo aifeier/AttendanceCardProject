@@ -40,6 +40,7 @@ export default class Checking extends Component {
         })
         this.state = {
             checkText: '外勤',
+            inWifi: false,
             zoomLevel: 10,
             coordinate: {
                 latitude: 30.278975,
@@ -57,11 +58,37 @@ export default class Checking extends Component {
                 },
             ],
         }
+        this._checkWifi()
+    }
+
+    _checkWifi() {
+        NetWorkUtils.getWifiList().then(wifis => {
+            console.log(wifis)
+            NetWorkUtils.checkHasWifi(wifis, this.state.companyWifis, (hasCompanyWifi) => {
+                    console.log('是否在公司wifi范围：' + hasCompanyWifi)
+                    if (hasCompanyWifi) {
+                        this.setState({
+                            checkText: 'WIFI打卡',
+                            inWifi: true,
+                        })
+                    } else {
+                        if (this.state.inWifi) {
+                            this.setState({
+                                checkText: '状态未知',
+                                inWifi: false,
+                            })
+                        }
+                    }
+                }
+            )
+        })
     }
 
     _log(event, data) {
         // ToastAndroid.show(JSON.stringify(data, null, 2), ToastAndroid.SHORT)
         console.debug('定位成功：' + JSON.stringify(data, null, 2))
+        if (this.state.inWifi)
+            return
         if (data.latitude > 0 && data.longitude > 0) {
             this.setState({
                 locationEnabled: false
@@ -94,11 +121,17 @@ export default class Checking extends Component {
             // ToastAndroid.show(JSON.stringify(response), ToastAndroid.SHORT)
             Alert.alert('', '您的勤奋打败了0%的队友')
         })
-        NetWorkUtils.getWifiList().then(wifis => {
-            console.log(wifis)
-            NetWorkUtils.checkHasWifi(wifis, this.state.companyWifis, (hasCompanyWifi) => console.log('是否在公司wifi范围：' + hasCompanyWifi))
-        })
 
+    }
+
+    componentDidMount() {
+        this.timer = setTimeout(() => {
+            this._checkWifi()
+        }, 60000)
+    }
+
+    componentWillUnmount() {
+        this.timer && clearTimeout(this.timer)
     }
 
     render() {
