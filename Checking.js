@@ -58,6 +58,7 @@ export default class Checking extends Component {
                 },
             ],
             android: Platform.OS == 'android',
+            watchID: null,
         }
         this._checkWifi()
     }
@@ -128,13 +129,41 @@ export default class Checking extends Component {
     }
 
     componentDidMount() {
+/*        //初始化当前的位置
+        navigator.geolocation.getCurrentPosition((initialPosition) => {
+                this._onGeoLocationSuccess(initialPosition)
+            },
+            (error) => alert(error.message),
+            {enableHighAccuracy: true, timeout: 30000, maximumAge: 1000})
+        // 监听
+        this.watchID = navigator.geolocation.watchPosition((lastPosition) => {
+            this._onGeoLocationSuccess(lastPosition)
+        })*/
         this.timer = setTimeout(() => {
             this._checkWifi()
         }, 60000)
     }
 
+    _onGeoLocationSuccess(lastPosition) {
+        if (this.state.inWifi)
+            return
+        AAmpUtils.LatLngConverterTOAAmp(lastPosition.coords.latitude, lastPosition.coords.longitude, (latlng) => {
+            console.debug(lastPosition, latlng)
+            this.setState({coordinate: latlng})
+            AAmpUtils.checkLLInCircle(this.companyLL.latitude, this.companyLL.longitude, this.companyLL.radius
+                , latlng.latitude, latlng.longitude
+                , (result) => {
+                    this.setState({
+                        checkText: result ? '正常打卡' : '外勤'
+                    })
+                })
+        })
+    }
+
     componentWillUnmount() {
         this.timer && clearTimeout(this.timer)
+/*        if (this.watchID)
+            navigator.geolocation.clearWatch(this.watchID)*/
     }
 
     render() {
