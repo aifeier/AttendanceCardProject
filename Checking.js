@@ -49,12 +49,16 @@ export default class Checking extends Component {
             locationEnabled: true,
             companyWifis: [
                 {
-                    BSSID: '30:fc:68:18:ac:1e',
-                    SSID: 'upsoft_yt',
+                    SSID: '30:fc:68:18:ac:1e',
+                    BSSID: 'upsoft_yt',
                 },
                 {
-                    BSSID: 'upsoft_5g',
-                    SSID: '30:fc:68:18:ac:20',
+                    SSID: 'upsoft_5g',
+                    BSSID: '30:fc:68:18:ac:20',
+                },
+                {
+                    SSID: '测试部test',
+                    BSSID: '14:75:90:83:a8:8c',
                 },
             ],
             android: Platform.OS == 'android',
@@ -129,16 +133,16 @@ export default class Checking extends Component {
     }
 
     componentDidMount() {
-/*        //初始化当前的位置
-        navigator.geolocation.getCurrentPosition((initialPosition) => {
-                this._onGeoLocationSuccess(initialPosition)
-            },
-            (error) => alert(error.message),
-            {enableHighAccuracy: true, timeout: 30000, maximumAge: 1000})
-        // 监听
-        this.watchID = navigator.geolocation.watchPosition((lastPosition) => {
-            this._onGeoLocationSuccess(lastPosition)
-        })*/
+        // //初始化当前的位置
+        // navigator.geolocation.getCurrentPosition((initialPosition) => {
+        //         this._onGeoLocationSuccess(initialPosition)
+        //     },
+        //     (error) => alert(error.message),
+        //     {enableHighAccuracy: true, timeout: 30000, maximumAge: 1000})
+        // // 监听
+        // this.watchID = navigator.geolocation.watchPosition((lastPosition) => {
+        //     this._onGeoLocationSuccess(lastPosition)
+        // })
         this.timer = setTimeout(() => {
             this._checkWifi()
         }, 60000)
@@ -162,8 +166,8 @@ export default class Checking extends Component {
 
     componentWillUnmount() {
         this.timer && clearTimeout(this.timer)
-/*        if (this.watchID)
-            navigator.geolocation.clearWatch(this.watchID)*/
+        // if (this.watchID)
+        //     navigator.geolocation.clearWatch(this.watchID)
     }
 
     render() {

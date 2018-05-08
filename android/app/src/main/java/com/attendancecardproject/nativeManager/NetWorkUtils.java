@@ -81,12 +81,13 @@ public class NetWorkUtils extends ReactContextBaseJavaModule {
         for (int i = 0; i < wifiList.size(); i++) {
             ReadableMap map = wifiList.getMap(i);
             for (int j = 0; j < companyWifiList.size(); j++) {
-                ReadableMap sourceMap = wifiList.getMap(j);
+                ReadableMap sourceMap = companyWifiList.getMap(j);
                 if (map.getString("BSSID").equals(sourceMap.getString("BSSID"))) {
                     callback.invoke(true);
                     return;
                 }
             }
         }
+        callback.invoke(false);
     }
 }
