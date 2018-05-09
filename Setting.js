@@ -12,7 +12,6 @@ export default class Setting extends Component {
     constructor(props) {
         super(props)
         console.debug(props)
-        console.debug(props.navigation.getParam('onResultBack'))
         this.state = {
             zoomLevel: 16,
             coordinate: {
