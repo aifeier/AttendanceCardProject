@@ -133,6 +133,7 @@ export default class Checking extends Component {
     }
 
     componentDidMount() {
+        console.debug('componentDidMount')
         // //初始化当前的位置
         // navigator.geolocation.getCurrentPosition((initialPosition) => {
         //         this._onGeoLocationSuccess(initialPosition)
@@ -185,11 +186,11 @@ export default class Checking extends Component {
                         {this.state.checkText}
                     </Text>
                 </View>
-                <Text style={styles.countBtn} onPress={() => this.props.navigation.navigate('App')}>
+                <Text style={styles.countBtn} onPress={() => this.props.navigation.push('App')}>
                     {'统计'}
                 </Text>
-                <Text style={[styles.countBtn, {top: 350,}]} onPress={() => this.props.navigation.navigate('Setting', {
-                    name: 'abc', onResultBack(changed) {
+                <Text style={[styles.countBtn, {top: 350,}]} onPress={() => this.props.navigation.push('Setting', {
+                    onResultBack(changed) {
                         console.log('拿到返回值' + changed)
                         getCompanyLL((error, result) => {
                             if (error && null == result) {

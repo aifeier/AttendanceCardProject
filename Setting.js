@@ -11,8 +11,8 @@ export default class Setting extends Component {
 
     constructor(props) {
         super(props)
-        console.log(props)
-        console.log(props.navigation.state.params.name)
+        console.debug(props)
+        console.debug(props.navigation.getParam('onResultBack'))
         this.state = {
             zoomLevel: 16,
             coordinate: {
@@ -35,8 +35,9 @@ export default class Setting extends Component {
             return
         }
         saveCompanyInfo(this.state.companyLL)
-        this.props.navigation.state.params.onResultBack(true)
         this.props.navigation.pop()
+        if (this.props.navigation.getParam('onResultBack'))
+            this.props.navigation.getParam('onResultBack')(true)
     }
 
     _onPress(event, data) {
